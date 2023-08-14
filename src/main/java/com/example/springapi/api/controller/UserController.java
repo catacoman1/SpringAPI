@@ -1,5 +1,5 @@
 package com.example.springapi.api.controller;
-
+import java.util.Optional;
 import com.example.springapi.api.model.User;
 import com.example.springapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,13 @@ public class UserController {
         this.userService=userService;
 
     }
-    @GetMapping
+    @GetMapping("/user")
     public User getUser(@RequestParam Integer id){
-        return userService.getUser(id);
+        Optional<User> user = userService.getUser(id);
+        if(user.isPresent()){
+            return (User) user.get();
+        }
+        return null;
     }
 
 }
